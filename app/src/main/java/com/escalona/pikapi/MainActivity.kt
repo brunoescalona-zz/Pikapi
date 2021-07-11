@@ -10,7 +10,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import com.escalona.pikapi.data.PokeApiRepositoryImpl
+import com.escalona.pikapi.data.local.PokemonDataBase
 import com.escalona.pikapi.data.remote.PokeApi
 import com.escalona.pikapi.ui.theme.PikapiTheme
 import kotlinx.coroutines.flow.collect
@@ -28,7 +30,13 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        val repository = PokeApiRepositoryImpl(PokeApi.service)
+        val db = Room.databaseBuilder(
+            applicationContext,
+            PokemonDataBase::class.java,
+            "pokemon-database"
+        ).build()
+
+        val repository = PokeApiRepositoryImpl(PokeApi.service, db.pokemonDao())
         lifecycleScope.launch {
             repository.getPokemons().collect {
                 Log.d("List of pokemons", "$it")
