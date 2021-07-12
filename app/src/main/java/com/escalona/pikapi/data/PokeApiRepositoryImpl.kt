@@ -10,8 +10,9 @@ import com.escalona.pikapi.data.remote.models.pokemon.entityMapper
 import com.escalona.pikapi.domain.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class PokeApiRepositoryImpl(
+class PokeApiRepositoryImpl @Inject constructor(
     private val service: PokeApiService,
     private val pokemonDao: PokemonDao
 ) : PokeApiRepository {
