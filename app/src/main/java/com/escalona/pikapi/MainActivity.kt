@@ -4,17 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
 import com.escalona.pikapi.data.PokeApiRepository
 import com.escalona.pikapi.ui.theme.PikapiTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,11 +32,10 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        lifecycleScope.launch {
-            repository.getPokemons().collect {
-                Log.d("List of pokemons", "$it")
-            }
-        }
+        val viewModel: MainViewModel by viewModels()
+        viewModel.pokemonList.observe(this, { pokemonList ->
+            Log.d("List of pokemons", "$pokemonList")
+        })
     }
 }
 
