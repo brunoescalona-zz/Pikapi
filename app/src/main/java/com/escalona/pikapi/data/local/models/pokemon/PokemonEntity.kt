@@ -8,7 +8,8 @@ import com.escalona.pikapi.domain.pokemon.Pokemon
 @Entity(tableName = "pokemon")
 data class PokemonEntity(
     @PrimaryKey val id: Int,
-    @ColumnInfo(name = "name") val name: String
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "sprite_url") val spriteUrl: String
 )
 
-fun PokemonEntity.domainMapper() = Pokemon(id, name)
+fun PokemonEntity.domainMapper() = Pokemon(id, name, spriteUrl)

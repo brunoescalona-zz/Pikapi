@@ -5,9 +5,14 @@ import com.escalona.pikapi.domain.pokemon.Pokemon
 import com.squareup.moshi.Json
 
 data class PokemonResponse(
-    @Json(name = "id") val id: Int,
-    @Json(name = "name") val name: String
+    @field:Json(name = "id") val id: Int,
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "sprites") val sprites: Sprites
 )
 
-fun PokemonResponse.domainMapper() = Pokemon(id, name)
-fun PokemonResponse.entityMapper() = PokemonEntity(id, name)
+data class Sprites(
+    @field:Json(name = "front_default") val frontDefault: String,
+)
+
+fun PokemonResponse.domainMapper() = Pokemon(id, name, sprites.frontDefault)
+fun PokemonResponse.entityMapper() = PokemonEntity(id, name, sprites.frontDefault)

@@ -1,5 +1,6 @@
 package com.escalona.pikapi.data
 
+import android.util.Log
 import com.escalona.pikapi.data.local.PokemonDao
 import com.escalona.pikapi.data.local.models.pokemon.PokemonEntity
 import com.escalona.pikapi.data.local.models.pokemon.domainMapper
@@ -23,7 +24,10 @@ class PokeApiRepositoryImpl @Inject constructor(
             val domainPokemons = service.getPokemons().results
                 .map { it.getResourceId() }
                 .map { service.getPokemon(it) }
-                .apply { pokemonDao.insertAll(*this.map { it.entityMapper() }.toTypedArray()) }
+                .apply {
+                    Log.d("xyz", this.toString())
+                    pokemonDao.insertAll(*this.map { it.entityMapper() }.toTypedArray())
+                }
                 .map { it.domainMapper() }
             emit(domainPokemons)
         } else {
