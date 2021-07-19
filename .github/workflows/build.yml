@@ -32,7 +32,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "/app/build/outputs/bundle/debug/app-debug.aab"
+          artifacts: "app/build/outputs/bundle/debug/app-debug.aab"
           bodyFile: ${{steps.github_release.outputs.changelog}}
           token: ${{ secrets.GITHUB_TOKEN }}
 
